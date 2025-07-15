@@ -8,6 +8,7 @@
 </head>
 <body>
     <i>pemilik sesi: {{ Auth::check() ? Auth::user()->name : 'Belum login' }}</i><br>
+    <i>Role: {{ Auth::check() ? Auth::user()->role->name : 'Guest' }}</i><br>
     <i><a href="/logout">logout</a></i>
     <center>
         <h1>AkuBakul</h1>

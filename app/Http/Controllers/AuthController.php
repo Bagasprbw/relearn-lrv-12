@@ -27,8 +27,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if (in_array($user->role->name, ['admin', 'super_admin'])) {
-                return redirect('/products');
+            if (in_array($user->role->name, ['admin_super'])) {
+                return redirect('/dashboard');
+            }else if (in_array($user->role->name, ['admin'])) {
+                return redirect('/dashboard');
             } else {
                 return redirect('/');
             }
