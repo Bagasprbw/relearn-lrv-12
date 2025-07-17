@@ -23,7 +23,8 @@
                     <a href="{{ route('products.create') }}" class="dropdown-item">Insert Product</a>
                 </div>
             </div>
-            <a href="/categories" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Category</a><hr>
+            <a href="/categories" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Category</a>
+            <a href="/data_admins" class="nav-item nav-link"><i class="fa fa-user me-2"></i>User</a><hr>
             <a href="/" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Landing Page</a>
             {{-- <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
             <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
