@@ -5,6 +5,7 @@ use App\Http\Controllers\dashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('index');
@@ -33,4 +34,10 @@ Route::middleware(['auth', 'role:admin_super'])->group(callback: function () {
     Route::post('/admin_store', [dashboardController::class, 'adminStore']);
     Route::delete('/admin_delete/{id}', [dashboardController::class, 'adminDestroy']);
     //Route::resource('admins', dashboardController::class); // iki gak kanggo, soale dak tabrakan method e (index, create, dll)
+});
+
+//khusus untuk role user biasa
+Route::middleware(['auth', 'role:user'])->group(callback: function () {
+    // Route::resource('profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 });

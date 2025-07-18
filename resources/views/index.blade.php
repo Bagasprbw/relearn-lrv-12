@@ -7,7 +7,9 @@
     <title>AkuBakul</title>
 </head>
 <body>
-    <i>pemilik sesi: {{ Auth::check() ? Auth::user()->name : 'Belum login' }}</i><br>
+    <i>pemilik sesi: {{ Auth::check() ? Auth::user()->name : 'Belum login' }}</i>
+    @if(Auth::check() && Auth::user()->role_id == 3) | <a href="/profile">Profile</a> @endif
+    <br>
     <i>Role: {{ Auth::check() ? Auth::user()->role->name : 'Guest' }}</i><br>
     <i><a href="/logout">logout</a></i>
     <center>
