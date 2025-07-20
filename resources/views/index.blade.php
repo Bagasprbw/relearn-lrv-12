@@ -15,7 +15,36 @@
     <center>
         <h1>AkuBakul</h1>
         <h3>Selamat datang di AkuBakul</h3> <br>
-        <p>Ayo dilarisi daganganku cah!! Tapi <a href="/login">login </a>sik lo cah, gen iso checkout. Nik urung due akun, <a href="/register">gawe akun</a> sek cah. Wes ngunu wae yo cah, Suwunnnn</p>
+        <p>Ayo dilarisi daganganku cah!! Tapi <a href="/login">login </a>sik lo cah, gen iso checkout. Nik urung due akun, <a href="/register">gawe akun</a> sek cah. Wes ngunu wae yo cah, Suwunnnn</p> <br><hr>
+        <h2>Daganganku</h2>
+
+        @if($products->isEmpty())
+            <p>Belum ada produk tersedia.</p>
+        @else
+            <table border="1" cellpadding="8" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Jeneng Produk</th>
+                        <th>Kategori</th>
+                        <th>Rego</th>
+                        <th>Cekout le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($products as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->category->name }}</td>
+                            <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td><button>Cek out</button></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+
     </center>
 
 </body>

@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Produk;
 
 Route::get('/', function () {
-    return view('index');
+    $products = Produk::all();
+    return view('index', compact('products'));
 });
 
 //Authentikasi
@@ -40,4 +42,5 @@ Route::middleware(['auth', 'role:admin_super'])->group(callback: function () {
 Route::middleware(['auth', 'role:user'])->group(callback: function () {
     // Route::resource('profile', ProfileController::class);
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/changePassword', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
 });
