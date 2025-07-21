@@ -60,7 +60,7 @@ class AuthController extends Controller
             'role_id' => $userRole->id,
         ]);
 
-        return redirect('/login')->with('success', 'Berhasil daftar. Silakan login.');
+        return redirect()->route('login.form')->with('success', 'Berhasil daftar. Silakan login.');
     }
 
     public function logout()

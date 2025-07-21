@@ -8,14 +8,14 @@
 </head>
 <body>
     <i>pemilik sesi: {{ Auth::check() ? Auth::user()->name : 'Belum login' }}</i>
-    @if(Auth::check() && Auth::user()->role_id == 3) | <a href="/profile">Profile</a> @endif
+    @if(Auth::check() && Auth::user()->role_id == 3) | <a href="{{ route('profile.index') }}">Profile</a> @endif
     <br>
     <i>Role: {{ Auth::check() ? Auth::user()->role->name : 'Guest' }}</i><br>
-    <i><a href="/logout">logout</a></i>
+    <i><a href="{{ route('logout') }}">logout</a></i>
     <center>
         <h1>AkuBakul</h1>
         <h3>Selamat datang di AkuBakul</h3> <br>
-        <p>Ayo dilarisi daganganku cah!! Tapi <a href="/login">login </a>sik lo cah, gen iso checkout. Nik urung due akun, <a href="/register">gawe akun</a> sek cah. Wes ngunu wae yo cah, Suwunnnn</p> <br><hr>
+        <p>Ayo dilarisi daganganku cah!! Tapi <a href="{{ route('login.form') }}">login </a>sik lo cah, gen iso checkout. Nik urung due akun, <a href="{{ route('register.form') }}">gawe akun</a> sek cah. Wes ngunu wae yo cah, Suwunnnn</p> <br><hr>
         <h2>Daganganku</h2>
 
         @if($products->isEmpty())

@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="admin_store" method="POST">
+        <form action="{{ route('dashboard.admins.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name">Nama</label>
@@ -43,7 +43,7 @@
                 <input type="password" name="password_confirmation" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="/data_admins" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('dashboard.admins.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 @endsection

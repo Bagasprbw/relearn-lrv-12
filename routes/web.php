@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
 use Illuminate\Support\Facades\Route;
@@ -22,25 +23,28 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 //khusus untuk admin dan super admin
-Route::middleware(['auth', 'role:admin,admin_super'])->group(function () {
-    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/products', [ProdukController::class, 'index'])->name('products.index');
-    Route::resource('products', ProdukController::class);
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:admin,admin_super'])->group(function () {
+    Route::get('/', [dashboardController::class, 'index'])->name('index'); //menjadi dashboard.index
+    Route::resource('products', ProdukController::class); //mendfinisakan semua routes di-> dashboard.products/
     Route::resource('categories', KategoriController::class);
 });
 
+
+
 //khusus untuk admin_super => untuk mengakses halaman manage data admin
-Route::middleware(['auth', 'role:admin_super'])->group(callback: function () {
-    Route::get('/data_admins', [dashboardController::class, 'admins']);
-    Route::get('/admin_insert', [dashboardController::class, 'adminCreate']);
-    Route::post('/admin_store', [dashboardController::class, 'adminStore']);
-    Route::delete('/admin_delete/{id}', [dashboardController::class, 'adminDestroy']);
-    //Route::resource('admins', dashboardController::class); // iki gak kanggo, soale dak tabrakan method e (index, create, dll)
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:admin_super'])->group(callback: function () {
+    // Route::get('/data_admins', [dashboardController::class, 'admins']);
+    // Route::get('/admin_insert', [dashboardController::class, 'adminCreate']);
+    // Route::post('/admin_store', [dashboardController::class, 'adminStore']);
+    // Route::delete('/admin_delete/{id}', [dashboardController::class, 'adminDestroy']);
+
+    //praktisnya
+    Route::resource('admins', AdminController::class);
 });
 
 //khusus untuk role user biasa
 Route::middleware(['auth', 'role:user'])->group(callback: function () {
     // Route::resource('profile', ProfileController::class);
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile/changePassword', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+    Route::get('user/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('user/profile/change_password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
 });

@@ -5,7 +5,7 @@
 @section('content')
     <div class="bg-light rounded p-4">
         <h4>Data Admin</h4>
-         <a href="/admin_insert" class="btn btn-primary mb-3">+ Tambah Admin</a>
+         <a href="{{ route('dashboard.admins.create') }}" class="btn btn-primary mb-3">+ Tambah Admin</a>
          {{-- atau --}}
         {{-- <a href="/products/tambah" class="btn btn-primary mb-3">+ Tambah Produk</a> --}}
 
@@ -36,7 +36,8 @@
                         <td>{{ $item->phone }}</td>
                         <td>{{ $item->address }}</td>
                         <td>
-                            <form action="/admin_delete/{{ $item->id }}" method="POST" onsubmit="return confirm('Yakin hapus user ini?')">
+                            {{-- <form action="/admin_delete/{{ $item->id }}" method="POST" onsubmit="return confirm('Yakin hapus user ini?')"> --}}
+                            <form action="{{ route('dashboard.admins.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin hapus user ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

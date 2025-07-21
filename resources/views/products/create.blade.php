@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('products.store') }}" method="POST">
+        <form action="{{ route('dashboard.products.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name">Nama Produk</label>
@@ -36,7 +36,7 @@
                 <input type="number" name="price" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('products.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('dashboard.products.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 @endsection

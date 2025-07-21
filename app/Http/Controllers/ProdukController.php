@@ -36,7 +36,7 @@ class ProdukController extends Controller
             'price' => $request->price,
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     //fungsi untuk menampilkan form edit produk
@@ -63,14 +63,14 @@ class ProdukController extends Controller
             'price' => $request->price,
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diupdate.');
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil diupdate.');
     }
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);
         $produk->delete();
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
+        return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil dihapus.');
     }
 
 }

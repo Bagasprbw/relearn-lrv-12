@@ -19,13 +19,13 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Products</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href="{{ route('products.index') }}" class="dropdown-item">Products Data</a>
-                    <a href="{{ route('products.create') }}" class="dropdown-item">Insert Product</a>
+                    <a href="{{ route('dashboard.products.index') }}" class="dropdown-item">Products Data</a>
+                    <a href="{{ route('dashboard.products.create') }}" class="dropdown-item">Insert Product</a>
                 </div>
             </div>
-            <a href="/categories" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Category</a>
+            <a href="{{ route('dashboard.categories.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Category</a>
             @if (Auth::user()->role_id == '1')
-                <a href="/data_admins" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Admins</a>
+                <a href="{{ route('dashboard.admins.index') }}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Admins</a>
             @endif
             <hr><a href="/" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Landing Page</a>
             {{-- <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
