@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -28,12 +29,23 @@ class ProdukController extends Controller
             'name' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategoris,id',
             'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            //$request->image->storeAs('public/products', $imageName);
+            $request->image->storeAs('products', $imageName, 'public');
+
+            //dd(Storage::files('public/products'));
+        }
 
         Produk::create([
             'name' => $request->name,
             'kategori_id' => $request->kategori_id,
             'price' => $request->price,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil ditambahkan.');
@@ -54,13 +66,30 @@ class ProdukController extends Controller
             'name' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategoris,id',
             'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $product = Produk::findOrFail($id);
+        $imageName = $product->image;
+
+        if ($request->hasFile('image')) { //cek apakah ada file gambar yang diupload
+            // Hapus gambar lama jika ada
+            if ($product->image && Storage::disk('public')->exists('products/' . $product->image)) {
+                Storage::disk('public')->delete('products/' . $product->image);
+            }
+
+
+            // Simpan gambar baru
+            $imageName = time() . '.' . $request->image->extension();
+            //$request->image->storeAs('public/products', $imageName);
+            $request->image->storeAs('products', $imageName, 'public');
+        }
+
         $product->update([
             'name' => $request->name,
             'kategori_id' => $request->kategori_id,
             'price' => $request->price,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil diupdate.');
@@ -68,6 +97,11 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);
+        // Hapus gambar dari storage
+        if ($produk->image && Storage::disk('public')->exists('products/' . $produk->image)) {
+            Storage::disk('public')->delete('products/' . $produk->image);
+        }
+
         $produk->delete();
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil dihapus.');

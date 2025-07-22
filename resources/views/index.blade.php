@@ -28,6 +28,7 @@
                         <th>Jeneng Produk</th>
                         <th>Kategori</th>
                         <th>Rego</th>
+                        <th>Rupo</th>
                         <th>Cekout le</th>
                     </tr>
                 </thead>
@@ -38,6 +39,13 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->category->name }}</td>
                             <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td>
+                                @if ($item->image)
+                                    <img src="{{ asset('storage/products/' . $item->image) }}" alt="{{ $item->name }}" style="max-width: 100px;">
+                                @else
+                                    <i>Gambar ora ono!</i>
+                                @endif
+                            </td>
                             <td><button>Cek out</button></td>
                         </tr>
                     @endforeach

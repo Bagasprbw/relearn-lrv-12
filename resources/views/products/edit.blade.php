@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboard.products.update', $products->id) }}" method="POST">
+        <form action="{{ route('dashboard.products.update', $products->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -36,6 +36,13 @@
             <div class="mb-3">
                 <label for="price">Harga</label>
                 <input type="number" name="price" value="{{$products->price}}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="image">Gambar</label>
+                <input type="file" name="image" class="form-control">
+                @if ($products->image)
+                    <img src="{{ asset('storage/products/' . $products->image) }}" alt="{{ $products->name }}" class="mt-2" style="max-width: 200px;">
+                @endif
             </div>
             <button type="submit" class="btn btn-success">Simpan</button>
             <a href="{{ route('dashboard.products.index') }}" class="btn btn-secondary">Kembali</a>

@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboard.products.store') }}" method="POST">
+        <form action="{{ route('dashboard.products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="name">Nama Produk</label>
@@ -34,6 +34,10 @@
             <div class="mb-3">
                 <label for="price">Harga</label>
                 <input type="number" name="price" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="price">Gambar</label>
+                <input type="file" name="image" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-success">Simpan</button>
             <a href="{{ route('dashboard.products.index') }}" class="btn btn-secondary">Kembali</a>

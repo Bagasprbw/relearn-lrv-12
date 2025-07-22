@@ -22,6 +22,7 @@
                     <th>Nama Produk</th>
                     <th>Kategori</th>
                     <th>Harga</th>
+                    <th>Gambar</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -31,6 +32,13 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->category->name }}</td>
                         <td>Rp {{ number_format($item->price) }}</td>
+                        <td>
+                            @if ($item->image)
+                                <img src="{{ asset('storage/products/' . $item->image) }}" alt="{{ $item->name }}" style="max-width: 100px;">
+                            @else
+                                Tidak ada gambar
+                            @endif
+                        </td>
                         <td>
                             <form action="{{ route('dashboard.products.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin hapus produk ini?')">
                                 @csrf

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('kategori_id')->constrained('kategoris')->onDelete('cascade');
             $table->decimal('price', 10, 2);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
