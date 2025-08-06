@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
@@ -105,6 +106,48 @@ class ProdukController extends Controller
         $produk->delete();
 
         return redirect()->route('dashboard.products.index')->with('success', 'Produk berhasil dihapus.');
+    }
+
+    //fungsi untuk mencari produk dengan integrasi AI
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        // Kirim ke Gemini API
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'x-goog-api-key' => env('GEMINI_API_KEY'),
+        ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', [
+            'contents' => [[
+                'parts' => [[
+                    'text' => "Ubah input pencarian berikut menjadi kata kunci produk singkat dan jelas: \"$query\". Jawabanmu hanya keyword-nya saja."
+                ]]
+            ]]
+        ]);
+
+        $processedQuery = $response->json()['candidates'][0]['content']['parts'][0]['text'] ?? $query;
+
+
+        if (empty(trim($processedQuery))) {
+            return view('index', ['products' => collect()]);
+        }
+
+        // Cari produk berdasarkan keyword yang dibantu AI
+        $keywords = explode(' ', strtolower($processedQuery)); // ubah ke lowercase dan potong per kata
+
+        $products = Produk::with('category')
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $word) {
+                    $query->orWhere('name', 'like', '%' . $word . '%')
+                          ->orWhereHas('category', function ($q) use ($word) {
+                              $q->where('name', 'like', '%' . $word . '%');
+                          });
+                }
+            })
+            ->get();
+
+
+        return view('index', compact('products'));
     }
 
 }

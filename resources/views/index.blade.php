@@ -16,11 +16,19 @@
         <h1>AkuBakul</h1>
         <h3>Selamat datang di AkuBakul</h3> <br>
         <p>Ayo dilarisi daganganku cah!! Tapi <a href="{{ route('login.form') }}">login </a>sik lo cah, gen iso checkout. Nik urung due akun, <a href="{{ route('register.form') }}">gawe akun</a> sek cah. Wes ngunu wae yo cah, Suwunnnn</p> <br><hr>
+
+        <form method="GET" action="{{ route('search') }}">
+            <input type="text" name="q" placeholder="Cari produk..." style="width: 300px;">
+            <button type="submit">Cari</button>
+        </form>
+        <br><br>
+
         <h2>Daganganku</h2>
 
         @if($products->isEmpty())
             <p>Belum ada produk tersedia.</p>
         @else
+
             <table border="1" cellpadding="8" cellspacing="0">
                 <thead>
                     <tr>

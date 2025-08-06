@@ -47,4 +47,5 @@ Route::middleware(['auth', 'role:user'])->group(callback: function () {
     // Route::resource('profile', ProfileController::class);
     Route::get('user/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('user/profile/change_password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+    Route::get('/search', [ProdukController::class, 'search'])->name('search');
 });
